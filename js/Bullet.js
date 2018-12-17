@@ -7,7 +7,7 @@ function Bullet(x,y,display) {
   this.shoot.src = '../images/bullet.png';
 
   this.draw = function () {
-    this.display.beginPath();
+    // this.display.beginPath();
     this.display.drawImage(this.shoot,sXPos, sYPos)
     this.update();
   }
