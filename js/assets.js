@@ -20,10 +20,4 @@ function loadImages(sources, callback) {
 
 var sources = {
   background: '../images/background.png',
-  character: '../images/move-left.png'
 };
-
-// loadImages(sources, function (images) {
-//   context.drawImage(images.darthVader, 100, 30, 200, 137);
-//   context.drawImage(images.yoda, 350, 55, 93, 104);
-// });
