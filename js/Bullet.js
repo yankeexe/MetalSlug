@@ -1,7 +1,8 @@
-function Bullet(x,y,display) {
+function Bullet(x,y,display,isRightDirection) {
   var sXPos = x + 70;
   var sYPos = y + 34;
 
+  this.isRightDirection=isRightDirection;
   this.display = display; 
   this.shoot = new Image();
   this.shoot.src = '../images/bullet.png';
@@ -13,6 +14,13 @@ function Bullet(x,y,display) {
   }
 
   this.update = function () {
-    sXPos += 10;
+
+    if(isRightDirection) {
+      sXPos += 10;
+    } 
+    else{
+      sXPos-=10;
+    } 
   }
+
 }

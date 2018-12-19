@@ -29,7 +29,8 @@
       [6],
       [8]
     ], // standing still, walk right, walk left, jump, fire
-    image: new Image()
+    image: new Image(),
+    enemyImage: new Image()
   };
 
   var controller = {
@@ -87,39 +88,53 @@
   };
 
   loop = function (time_stamp) {
+
+    shootTimer++; 
     ctx.clearRect(0, 0, cvs.width, cvs.height);
+  
+      if (controller.right.active) {
+        background.update();
+      } else {
+        background.draw();
+      }
 
-    if (controller.right.active) {
-      background.update();
-    } else {
-      background.draw();
+      player.move(controller, sprite_sheet, cvs);
+      enemy.draw(ctx,sprite_sheet);
+      enemy.move(player.x,player.y);
+  
+      if(shootTimer == 50) {
+
+        enemy.shoot(sprite_sheet);
+        shootTimer = 0;
+      }
+
+      window.requestAnimationFrame(loop);
     }
-    player.move(controller, sprite_sheet, cvs);
 
-    window.requestAnimationFrame(loop);
+    window.addEventListener("keydown", controller.keyUpDown);
+    window.addEventListener("keyup", controller.keyUpDown);
 
-  };
-
-  window.addEventListener("keydown", controller.keyUpDown);
-  window.addEventListener("keyup", controller.keyUpDown);
   let player;
   let background;
+  let enemy;
 
   function Game() {
 
     this.init = () => {
       background = new Background();
       player = new Character();
+      enemy = new Enemy();
 
       sprite_sheet.image.addEventListener("load", function (event) {
         loop();
       });
 
       sprite_sheet.image.src = "../images/character_move.png";
+      sprite_sheet.enemyImage.src = "../images/character_move.png";
     };
   };
 
-  var game = new Game()
+  var game = new Game();
   game.init();
 
 })();
