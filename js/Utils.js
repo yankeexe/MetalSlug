@@ -5,6 +5,10 @@ var ctx = cvs.getContext('2d');
 var enemyGenerateTimer = 0;
 var direction = true;
 var enemyList = [];
+var kill = 0;
+var life = 3;
+var enemy;
+var anime;
 
 sprite_sheet = {
   frame_sets: [

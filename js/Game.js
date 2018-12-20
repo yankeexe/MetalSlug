@@ -21,7 +21,6 @@
   }
 
   loop = function (time_stamp) {
-    var enemy;
     ctx.clearRect(0, 0, cvs.width, cvs.height);
     enemyGenerateTimer++;
 
@@ -43,7 +42,7 @@
       enemyList[i].move(player.x, player.y);
     }
 
-    //Collision
+    //Collision Enemy
     for (var i = 0; i < player.bullets.length; i++) {
       for (var j = 0; j < enemyList.length; j++) {
         if (
@@ -52,16 +51,49 @@
           (player.bullets[i].sYPos <= enemyList[j].y + enemyList[j].height ||
             player.bullets[i].sYPos + player.bullets[i].height >= enemyList[j].height)
         ) {
-          console.log('hit');
           enemyList.splice(j, 1);
           player.bullets.splice(i, 1);
+          kill++;
         }
       }
     }
 
-    window.requestAnimationFrame(loop);
-  };
+    //Collision Player
+    for (var j = 0; j < enemyList.length; j++) {
+      for (var i = 0; i < enemyList[j].bullets.length; i++) {
+        if (
+          enemyList[j].bullets[i].sXPos <= player.x + player.width &&
+          enemyList[j].bullets[i].sXPos >= player.x &&
+          enemyList[j].bullets[i].sYPos >= player.y &&
+          enemyList[j].bullets[i].sYPos + enemyList[j].bullets[i].height <= player.y + player.height
+        ) {
+          enemyList[j].bullets.splice(i, 1);
+          life--;
+        }
+      }
+    }
 
+    if (life == 0) {
+      ctx.font = "50px Press Start";
+      ctx.fillStyle = "white";
+      ctx.fillText('Game Over', 200, 200);
+
+      ctx.font = "20px Press Start";
+      ctx.fillStyle = "white";
+      console.log(kill);
+      ctx.fillText(`Kills: ${kill}`, 300, 250);
+      cancelAnimationFrame(anime);
+      return;
+    }
+
+
+    ctx.font = "10px Press Start";
+    ctx.fillStyle = "white";
+    ctx.fillText(`Kill: ${kill}`, 20, 30);
+    ctx.fillText(`Life: ${life}`, 150, 30);
+
+    anime = requestAnimationFrame(loop);
+  };
 
   window.addEventListener("keydown", controller.keyUpDown);
   window.addEventListener("keyup", controller.keyUpDown);
