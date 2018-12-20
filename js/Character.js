@@ -18,7 +18,7 @@ function Character(frame_set, delay) {
   var that = this;
   this.bullets = [];
   this.shootingTime = -10;
-  this.isRightDirection =true;
+  this.isRightDirection = true;
   this.draw = function (ctx, sprite_sheet) {
     // console.log(ctx)
     ctx.drawImage(sprite_sheet.image, that.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE,
@@ -42,17 +42,17 @@ function Character(frame_set, delay) {
     if (controller.up.active && !this.jumping) {
       controller.up.active = false;
       this.jumping = true;
-      this.y_velocity -= 5.5;
+      this.y_velocity -= 10.5;
     }
 
     if (controller.left.active) {
       this.change(sprite_sheet.frame_sets[2], 15);
       this.x_velocity -= 0.5;
-      this.isRightDirection=false;
+      this.isRightDirection = false;
     }
 
     if (controller.right.active) {
-      this.isRightDirection=true;
+      this.isRightDirection = true;
       this.change(sprite_sheet.frame_sets[1], 15);
       if (this.x <= canvas.width / 2)
         this.x_velocity += 0.10;
@@ -95,13 +95,13 @@ function Character(frame_set, delay) {
     this.update();
     this.draw(canvas.getContext('2d'), sprite_sheet);
 
-    for (i = 0; i < this.bullets.length; i++) {
+    for (var i = 0; i < this.bullets.length; i++) {
       this.bullets[i].draw();
     }
   }
 
   this.change = function (frame_set, delay = 15) {
-    //Change the fram set 
+    //Change the fram set
     if (this.frame_set != frame_set) {
 
       this.count = 0; // Reset the count.
@@ -125,7 +125,7 @@ function Character(frame_set, delay) {
 
   this.shoot = function (sprite_sheet) {
     this.change(sprite_sheet.frame_sets[4], 15);
-    var bullet = new Bullet(this.x, this.y, ctx,this.isRightDirection);
+    var bullet = new Bullet(this.x, this.y, ctx, this.isRightDirection);
     this.bullets.push(bullet);
   }
 };
