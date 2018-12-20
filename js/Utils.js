@@ -6,7 +6,6 @@ var enemyGenerateTimer = 0;
 var direction = true;
 var enemyList = [];
 
-
 sprite_sheet = {
   frame_sets: [
     [0, 1],

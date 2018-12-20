@@ -8,19 +8,19 @@ function Character(frame_set, delay) {
   this.frame = 0; // The value in the sprite sheet of the sprite image / tile to display.
   this.frame_index = 0; // The frame's index in the current animation frame set.
   this.frame_set = frame_set; // The current animation frame set that holds sprite tile values.
-  this.jumping = true,
-    this.height = 80,
-    this.width = 80,
-    this.x = 0,
-    this.y = 40 - 18,
-    this.x_velocity = 0,
-    this.y_velocity = 0;
+  this.jumping = true;
+  this.height = 80;
+  this.width = 80;
+  this.x = 0;
+  this.y = 40 - 18;
+  this.x_velocity = 0;
+  this.y_velocity = 0;
   var that = this;
   this.bullets = [];
   this.shootingTime = -10;
   this.isRightDirection = true;
+
   this.draw = function (ctx, sprite_sheet) {
-    // console.log(ctx)
     ctx.drawImage(sprite_sheet.image, that.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE,
       that.x, that.y, SPRITE_DEST_SIZE, SPRITE_DEST_SIZE);
   }
@@ -28,13 +28,11 @@ function Character(frame_set, delay) {
   this.change = function (frame_set, delay = 15) {
 
     if (this.frame_set != frame_set) {
-
       this.count = 0;
       this.delay = delay;
       this.frame_index = 0;
       this.frame_set = frame_set;
       this.frame = this.frame_set[this.frame_index];
-
     }
   }
 
@@ -67,6 +65,10 @@ function Character(frame_set, delay) {
       this.shootingTime = -10;
       this.shoot(sprite_sheet, canvas);
       controller.space.active = false;
+
+      var sound = new Audio('../sounds/Shoot1.wav');
+      sound.play();
+
     }
 
     this.shootingTime++;

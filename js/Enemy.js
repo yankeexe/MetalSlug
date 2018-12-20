@@ -4,18 +4,18 @@ function Enemy(frame_set, delay) {
   this.frame = 0; // The value in the sprite sheet of the sprite image / tile to display.
   this.frame_index = 0; // The frame's index in the current animation frame set.
   this.frame_set = frame_set; // The current animation frame set that holds sprite tile values.
-  this.jumping = true,
-    this.height = 80,
-    this.width = 80,
-    this.x = 700,
-    this.y = 250,
-    this.x_velocity = 0,
-    this.y_velocity = 0;
-  var that = this;
+  this.jumping = true;
+  this.height = 80;
+  this.width = 80;
+  this.x = 700;
+  this.y = 250;
+  this.x_velocity = 0;
+  this.y_velocity = 0;
   this.speed = .5;
   this.bullets = [];
   this.shootTimer = 0;
   this.randomTime = Math.floor(Math.random() * 100 + 80)
+  var that = this;
 
   this.draw = function (ctx, sprite_sheet) {
     ctx.drawImage(sprite_sheet.image, that.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE,
@@ -25,6 +25,7 @@ function Enemy(frame_set, delay) {
   this.move = (pX, pY) => {
     this.shootTimer++;
 
+    //move the enemy towards player
     this.rotation = Math.atan2(pY - this.y, pX - this.x);
     this.x += Math.cos(this.rotation) * this.speed;
     this.y += Math.sin(this.rotation) * this.speed;
@@ -35,22 +36,20 @@ function Enemy(frame_set, delay) {
     this.draw(ctx, sprite_sheet);
 
     for (var i = 0; i < this.bullets.length; i++) {
-      console.log(i);
       this.bullets[i].draw();
     }
 
     if (this.shootTimer == this.randomTime) {
       this.shoot(sprite_sheet);
+
+      var enemyShoot = new Audio('../sounds/Shoot.wav');
+      enemyShoot.play();
       this.shootTimer = 0;
     }
   }
 
-  //change sprite sheet
   this.change = function (frame_set, delay = 15) {
-    //Change the fram set
-    console.log('aa');
     if (this.frame_set != frame_set) {
-
       this.count = 0; // Reset the count.
       this.delay = delay; // Set the delay.
       this.frame_index = 0; // Start at the first frame in the new frame set.
@@ -59,7 +58,6 @@ function Enemy(frame_set, delay) {
     }
   };
 
-  //update frame
   this.update = function () {
     this.count++;
 

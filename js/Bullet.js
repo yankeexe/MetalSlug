@@ -1,26 +1,26 @@
-function Bullet(x,y,display,isRightDirection) {
-  var sXPos = x + 70;
-  var sYPos = y + 34;
+function Bullet(x, y, display, isRightDirection) {
+  this.sXPos = x + 70;
+  this.sYPos = y + 34;
+  this.width = 14;
+  this.height = 8;
 
-  this.isRightDirection=isRightDirection;
-  this.display = display; 
+  this.isRightDirection = isRightDirection;
+  this.display = display;
   this.shoot = new Image();
   this.shoot.src = '../images/bullet.png';
 
   this.draw = function () {
-    // this.display.beginPath();
-    this.display.drawImage(this.shoot,sXPos, sYPos)
+    this.display.drawImage(this.shoot, this.sXPos, this.sYPos, this.width, this.height);
     this.update();
   }
 
   this.update = function () {
 
-    if(isRightDirection) {
-      sXPos += 10;
-    } 
-    else{
-      sXPos-=10;
-    } 
+    if (isRightDirection) {
+      this.sXPos += 10;
+    } else {
+      this.sXPos -= 10;
+    }
   }
 
 }
