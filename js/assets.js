@@ -20,4 +20,5 @@ function loadImages(sources, callback) {
 
 var sources = {
   background: '../images/background.png',
+  heart: '../images/health.png'
 };

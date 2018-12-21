@@ -9,6 +9,11 @@ var kill = 0;
 var life = 3;
 var enemy;
 var anime;
+var bgMusic;
+// var sources = {
+//   background: '../images/background.png',
+// };
+
 
 sprite_sheet = {
   frame_sets: [

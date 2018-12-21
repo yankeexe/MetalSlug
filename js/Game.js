@@ -5,10 +5,6 @@
     this.y = 0;
     this.images = null;
 
-    loadImages(sources, (images) => {
-      this.images = images;
-    })
-
     this.draw = () => {
       ctx.drawImage(this.images.background, this.x, this.y);
     }
@@ -74,6 +70,10 @@
     }
 
     if (life == 0) {
+      bgMusic.pause();
+      var death = new Audio('../sounds/Death.wav');
+      death.play();
+
       ctx.font = "50px Press Start";
       ctx.fillStyle = "white";
       ctx.fillText('Game Over', 200, 200);
@@ -89,6 +89,7 @@
 
     ctx.font = "10px Press Start";
     ctx.fillStyle = "white";
+    // ctx.drawImage(this.images.heart, 100, 30)
     ctx.fillText(`Kill: ${kill}`, 20, 30);
     ctx.fillText(`Life: ${life}`, 150, 30);
 
@@ -109,9 +110,13 @@
       player = new Character();
 
       sprite_sheet.image.addEventListener("load", function (event) {
-        var bgMusic = new Audio('../sounds/BGM2.wav');
+        loadImages(sources, (images) => {
+          console.log(images)
+          background.images = images;
+          loop();
+        })
+        bgMusic = new Audio('../sounds/BGM2.wav');
         bgMusic.play();
-        loop();
       });
 
       sprite_sheet.image.src = "../images/character_move.png";
