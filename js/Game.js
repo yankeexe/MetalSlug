@@ -5,7 +5,7 @@
     this.images = null;
 
     this.draw = () => {
-      ctx.drawImage(this.images.background, this.x, this.y);
+      ctx.drawImage(images[IMAGE.BACKGROUND], this.x, this.y);
     };
 
     this.update = () => {
@@ -18,7 +18,7 @@
   loop = function (time_stamp) {
     counter++;
 
-    if (counter >= 2) {
+    if (counter >= 1) {
       healthCounter++;
       weaponCounter++;
       counter = 0;
@@ -89,16 +89,25 @@
       let tempEnemyList = enemyList;
       for (var i = 0; i < tempPlayerBullets.length; i++) {
         for (var j = 0; j < tempEnemyList.length; j++) {
+          console.log(i, tempPlayerBullets[i]);
           if (
             tempPlayerBullets[i].sXPos + tempPlayerBullets[i].width >= tempEnemyList[j].x &&
             tempPlayerBullets[i].sXPos <= tempEnemyList[j].x + tempEnemyList[j].width &&
             (tempPlayerBullets[i].sYPos <= tempEnemyList[j].y + tempEnemyList[j].height ||
               tempPlayerBullets[i].sYPos + tempPlayerBullets[i].height >= tempEnemyList[j].height)
           ) {
-            ctx.drawImage(sprite_sheet.explosion, 0, 0, 47, 61, tempEnemyList[j].x, tempEnemyList[j].y, 47, 61);
-            enemyList.splice(j, 1);
-            player.bullets.splice(i, 1);
-            kill++;
+            var sound = new Audio('/sounds/Explosion.wav');
+            sound.play();
+            tempEnemyList[j].life--;
+            console.log(tempEnemyList[j].life)
+
+            if (tempEnemyList[j].life == 0) {
+              ctx.drawImage(images[IMAGE.EXPLOSION], 0, 0, 47, 61, tempEnemyList[j].x, tempEnemyList[j].y, 47, 61);
+              enemyList.splice(j, 1);
+              player.bullets.splice(i, 1);
+              kill++;
+            }
+
           }
         }
       }
@@ -121,7 +130,7 @@
 
       if (life == 0) {
         bgMusic.pause();
-        var death = new Audio("../sounds/Death.wav");
+        var death = new Audio("./sounds/Death.wav");
         death.play();
 
         ctx.font = "50px Press Start";
@@ -155,7 +164,7 @@
       gameStart = true;
       ctx.clearRect(0, 0, cvs.width, cvs.height);
       window.removeEventListener("keydown", startGame);
-      game.init();
+      game.start();
     }
   }
 
@@ -164,35 +173,40 @@
   let enemy;
 
   function Game() {
+    this.load = () => {
+      console.log(imagesLength, 'ima');
+      imagesLength++;
+      if (imagesLength >= IMAGE_SRC.length) {
+        game.start();
+      }
+    }
     this.init = () => {
       background = new Background();
       player = new Character();
 
-      sprite_sheet.image.addEventListener("load", function (event) {
-        loadImages(sources, images => {
-          background.images = images;
-          if (gameStart == false) {
-            ctx.drawImage(sprite_sheet.startScreen, 0, 0, 798, 601, 0, 0, 800, 395);
-          }
-          if (gameStart == true) {
-            loop();
-          }
-        });
-
-        bgMusic = new Audio("../sounds/BGM2.wav");
-        bgMusic.volume = 0.2;
-        bgMusic.play();
-      });
-
-      sprite_sheet.image.src = "../images/char-enemy.png";
-      sprite_sheet.image.src = "../images/char-enemy.png";
-      sprite_sheet.heart.src = "../images/health.png";
-      sprite_sheet.startScreen.src = "../images/Start-Screen.png";
-      sprite_sheet.explosion.src = "../images/explosion.png";
-      sprite_sheet.weaponUpdate.src = "../images/rocket-up.png";
+      for (let i = 0; i < IMAGE_SRC.length; i++) {
+        let img = new Image();
+        img.src = IMAGE_SRC[i];
+        img.onload = this.load;
+        images.push(img);
+      }
     };
+
+    this.start = () => {
+      console.log('start');
+      if (gameStart == false) {
+        ctx.drawImage(images[IMAGE.START_SCREEN], 0, 0, 798, 601, 0, 0, 800, 395);
+      }
+      if (gameStart == true) {
+        bgMusic = new Audio('./sounds/BGM2.wav');
+        bgMusic.volume = 0.5;
+        bgMusic.play();
+        loop();
+      }
+    }
   }
 
   var game = new Game();
   game.init();
+
 })();

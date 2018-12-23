@@ -89,3 +89,20 @@ var controller = {
   }
 
 };
+
+var IMAGE = {
+  BACKGROUND: 0,
+  BULLET: 1,
+  ENEMY: 2,
+  EXPLOSION: 3,
+  HEALTH: 4,
+  KHATRA: 5,
+  ROCKET_UP: 6,
+  START_SCREEN: 7
+}
+var IMAGE_SRC = [
+  './images/background.png', './images/bullet.png', './images/char-enemy.png', './images/explosion.png', './images/health.png', './images/khatra.png', './images/rocket-up.png', './images/Start-Screen.png'
+
+];
+let images = [];
+let imagesLength = 0;

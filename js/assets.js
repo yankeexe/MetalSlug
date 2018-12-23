@@ -19,5 +19,5 @@ function loadImages(sources, callback) {
 }
 
 var sources = {
-  background: '../images/background.png',
+  background: './images/background.png',
 };

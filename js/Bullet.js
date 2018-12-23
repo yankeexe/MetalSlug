@@ -9,16 +9,16 @@ function Bullet(x, y, display, isRightDirection, khatraBullet) {
   this.isRightDirection = isRightDirection;
   this.display = display;
   this.shootSimple = new Image();
-  this.shootSimple.src = '../images/bullet.png';
+  this.shootSimple.src = './images/bullet.png';
   this.shootKhatra = new Image();
-  this.shootKhatra.src = '../images/khatra.png';
+  this.shootKhatra.src = './images/khatra.png';
 
   this.draw = function () {
     let bullet = null;
     if (khatraBullet) {
-      bullet = this.shootKhatra;
+      bullet = images[IMAGE.KHATRA];
     } else {
-      bullet = this.shootSimple;
+      bullet = images[IMAGE.BULLET];
     }
     this.display.drawImage(bullet, this.sXPos, this.sYPos, this.width, this.height);
     this.update();

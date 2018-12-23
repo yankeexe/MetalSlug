@@ -20,9 +20,10 @@ function Character(frame_set, delay) {
   this.shootingTime = -10;
   this.isRightDirection = true;
   this.khatraWeapon = false;
+  this.khatraBulletCounter = 0;
 
   this.draw = function (ctx, sprite_sheet) {
-    ctx.drawImage(sprite_sheet.image, that.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE,
+    ctx.drawImage(images[IMAGE.ENEMY], that.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE,
       that.x, that.y, SPRITE_DEST_SIZE, SPRITE_DEST_SIZE);
   }
 
@@ -67,11 +68,11 @@ function Character(frame_set, delay) {
       this.shoot(sprite_sheet, canvas);
       controller.space.active = false;
       if (this.khatraWeapon) {
-        var sound = new Audio('../sounds/Reload.wav');
+        var sound = new Audio('./sounds/Reload.wav');
         sound.volume = 1;
         sound.play();
       } else {
-        var sound = new Audio('../sounds/Shoot1.wav');
+        var sound = new Audio('./sounds/Shoot1.wav');
         sound.play();
       }
 
@@ -136,5 +137,14 @@ function Character(frame_set, delay) {
 
     var bullet = new Bullet(this.x, this.y, ctx, this.isRightDirection, this.khatraWeapon);
     this.bullets.push(bullet);
+
+    if (this.khatraWeapon) {
+      this.khatraBulletCounter++;
+      ctx.fillText(`Khatra: ${this.khatraBulletCounter}`, 200, 200);
+    }
+    if (this.khatraBulletCounter > 30) {
+      this.khatraBulletCounter = 0;
+      this.khatraWeapon = false;
+    }
   }
 };

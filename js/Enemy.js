@@ -15,10 +15,11 @@ function Enemy(frame_set, delay) {
   this.bullets = [];
   this.shootTimer = 0;
   this.randomTime = Math.floor(Math.random() * 100 + 80);
+  this.life = 3;
   var that = this;
 
   this.draw = function (ctx, sprite_sheet) {
-    ctx.drawImage(sprite_sheet.image, that.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE,
+    ctx.drawImage(images[IMAGE.ENEMY], that.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE,
       that.x, that.y, SPRITE_DEST_SIZE, SPRITE_DEST_SIZE);
   };
 
@@ -42,7 +43,7 @@ function Enemy(frame_set, delay) {
     if (this.shootTimer == this.randomTime) {
       this.shoot(sprite_sheet);
 
-      var enemyShoot = new Audio('../sounds/Shoot.wav');
+      var enemyShoot = new Audio('./sounds/Shoot.wav');
       enemyShoot.play();
       this.shootTimer = 0;
     }

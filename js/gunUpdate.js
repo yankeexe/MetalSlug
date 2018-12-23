@@ -5,6 +5,6 @@ function GunUpdate() {
   this.height = 33;
 
   this.draw = function () {
-    ctx.drawImage(sprite_sheet.weaponUpdate, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
+    ctx.drawImage(images[IMAGE.ROCKET_UP], 0, 0, this.width, this.height, this.x, this.y, this.width, this.height)
   }
 }

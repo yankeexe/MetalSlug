@@ -5,7 +5,7 @@ function Life() {
   this.y = 280;
 
   this.draw = () => {
-    ctx.drawImage(sprite_sheet.heart, 0, 0, 178, 178, this.x, this.y, this.width, this.height);
+    ctx.drawImage(images[IMAGE.HEALTH], 0, 0, 178, 178, this.x, this.y, this.width, this.height);
   }
 
 
