@@ -107,6 +107,9 @@ function Character(frame_set, delay) {
     for (var i = 0; i < this.bullets.length; i++) {
       this.bullets[i].draw();
     }
+    if (this.khatraWeapon) {
+      this.showKhatraBulletCount();
+    }
   }
 
   this.change = function (frame_set, delay = 15) {
@@ -140,11 +143,15 @@ function Character(frame_set, delay) {
 
     if (this.khatraWeapon) {
       this.khatraBulletCounter++;
-      ctx.fillText(`Khatra: ${this.khatraBulletCounter}`, 200, 200);
     }
     if (this.khatraBulletCounter > 30) {
       this.khatraBulletCounter = 0;
       this.khatraWeapon = false;
     }
+  }
+
+  this.showKhatraBulletCount = () => {
+    ctx.fillText(`Khatra: ${this.khatraBulletCounter}`, 500, 30);
+
   }
 };
