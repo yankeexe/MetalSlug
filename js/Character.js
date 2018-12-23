@@ -19,6 +19,7 @@ function Character(frame_set, delay) {
   this.bullets = [];
   this.shootingTime = -10;
   this.isRightDirection = true;
+  this.khatraWeapon = false;
 
   this.draw = function (ctx, sprite_sheet) {
     ctx.drawImage(sprite_sheet.image, that.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE,
@@ -65,9 +66,14 @@ function Character(frame_set, delay) {
       this.shootingTime = -10;
       this.shoot(sprite_sheet, canvas);
       controller.space.active = false;
-
-      var sound = new Audio('../sounds/Shoot1.wav');
-      sound.play();
+      if (this.khatraWeapon) {
+        var sound = new Audio('../sounds/Reload.wav');
+        sound.volume = 1;
+        sound.play();
+      } else {
+        var sound = new Audio('../sounds/Shoot1.wav');
+        sound.play();
+      }
 
     }
 
@@ -127,7 +133,8 @@ function Character(frame_set, delay) {
 
   this.shoot = function (sprite_sheet) {
     this.change(sprite_sheet.frame_sets[4], 15);
-    var bullet = new Bullet(this.x, this.y, ctx, this.isRightDirection);
+
+    var bullet = new Bullet(this.x, this.y, ctx, this.isRightDirection, this.khatraWeapon);
     this.bullets.push(bullet);
   }
 };

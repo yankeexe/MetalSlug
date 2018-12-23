@@ -5,13 +5,19 @@ var ctx = cvs.getContext('2d');
 var enemyGenerateTimer = 0;
 var direction = true;
 var enemyList = [];
+var truckList = [];
 var kill = 0;
 var life = 3;
 var enemy;
+var truck;
 var anime;
 var bgMusic;
 var gameStart = false;
-
+var counter = 0;
+var healthCounter = 0;
+var health = null;
+var weapon = null;
+var weaponCounter = 0;
 
 
 sprite_sheet = {
@@ -20,12 +26,14 @@ sprite_sheet = {
     [2, 3],
     [4, 5],
     [6],
-    [8]
+    [8],
+    [9, 10, 11],
   ],
   image: new Image(),
-  enemyImage: new Image(),
   heart: new Image(),
   startScreen: new Image(),
+  explosion: new Image(),
+  weaponUpdate: new Image(),
 }
 
 var controller = {

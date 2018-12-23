@@ -14,7 +14,7 @@ function Enemy(frame_set, delay) {
   this.speed = .5;
   this.bullets = [];
   this.shootTimer = 0;
-  this.randomTime = Math.floor(Math.random() * 100 + 80)
+  this.randomTime = Math.floor(Math.random() * 100 + 80);
   var that = this;
 
   this.draw = function (ctx, sprite_sheet) {
@@ -30,7 +30,7 @@ function Enemy(frame_set, delay) {
     this.x += Math.cos(this.rotation) * this.speed;
     this.y += Math.sin(this.rotation) * this.speed;
 
-    this.change(sprite_sheet.frame_sets[2], 15);
+    this.change(sprite_sheet.frame_sets[5], 15);
     this.update();
 
     this.draw(ctx, sprite_sheet);

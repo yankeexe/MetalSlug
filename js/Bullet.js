@@ -1,16 +1,26 @@
-function Bullet(x, y, display, isRightDirection) {
+function Bullet(x, y, display, isRightDirection, khatraBullet) {
   this.sXPos = x + 70;
   this.sYPos = y + 34;
   this.width = 14;
   this.height = 8;
 
+  this.khatraBullet = khatraBullet;
+
   this.isRightDirection = isRightDirection;
   this.display = display;
-  this.shoot = new Image();
-  this.shoot.src = '../images/bullet.png';
+  this.shootSimple = new Image();
+  this.shootSimple.src = '../images/bullet.png';
+  this.shootKhatra = new Image();
+  this.shootKhatra.src = '../images/khatra.png';
 
   this.draw = function () {
-    this.display.drawImage(this.shoot, this.sXPos, this.sYPos, this.width, this.height);
+    let bullet = null;
+    if (khatraBullet) {
+      bullet = this.shootKhatra;
+    } else {
+      bullet = this.shootSimple;
+    }
+    this.display.drawImage(bullet, this.sXPos, this.sYPos, this.width, this.height);
     this.update();
   }
 
