@@ -10,9 +10,8 @@ var life = 3;
 var enemy;
 var anime;
 var bgMusic;
-// var sources = {
-//   background: '../images/background.png',
-// };
+var gameStart = false;
+
 
 
 sprite_sheet = {
@@ -24,7 +23,9 @@ sprite_sheet = {
     [8]
   ],
   image: new Image(),
-  enemyImage: new Image()
+  enemyImage: new Image(),
+  heart: new Image(),
+  startScreen: new Image(),
 }
 
 var controller = {

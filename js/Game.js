@@ -1,5 +1,4 @@
-(function () {
-
+(function() {
   function Background() {
     this.x = 0;
     this.y = 0;
@@ -7,16 +6,15 @@
 
     this.draw = () => {
       ctx.drawImage(this.images.background, this.x, this.y);
-    }
+    };
 
     this.update = () => {
       this.x--;
       this.draw();
-    }
-
+    };
   }
 
-  loop = function (time_stamp) {
+  loop = function(time_stamp) {
     ctx.clearRect(0, 0, cvs.width, cvs.height);
     enemyGenerateTimer++;
 
@@ -24,7 +22,7 @@
       background.update();
     } else {
       background.draw();
-    };
+    }
 
     player.move(controller, sprite_sheet, cvs);
 
@@ -71,12 +69,12 @@
 
     if (life == 0) {
       bgMusic.pause();
-      var death = new Audio('../sounds/Death.wav');
+      var death = new Audio("../sounds/Death.wav");
       death.play();
 
       ctx.font = "50px Press Start";
       ctx.fillStyle = "white";
-      ctx.fillText('Game Over', 200, 200);
+      ctx.fillText("Game Over", 200, 200);
 
       ctx.font = "20px Press Start";
       ctx.fillStyle = "white";
@@ -85,7 +83,6 @@
       cancelAnimationFrame(anime);
       return;
     }
-
 
     ctx.font = "10px Press Start";
     ctx.fillStyle = "white";
@@ -98,33 +95,48 @@
 
   window.addEventListener("keydown", controller.keyUpDown);
   window.addEventListener("keyup", controller.keyUpDown);
+  window.addEventListener("keydown", startGame);
+
+  function startGame(e) {
+    if (e.keyCode == 13) {
+      gameStart = true;
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
+      window.removeEventListener("keydown", startGame);
+      game.init();
+    }
+  }
 
   let player;
   let background;
   let enemy;
 
   function Game() {
-
     this.init = () => {
       background = new Background();
       player = new Character();
 
-      sprite_sheet.image.addEventListener("load", function (event) {
-        loadImages(sources, (images) => {
-          console.log(images)
+      sprite_sheet.image.addEventListener("load", function(event) {
+        loadImages(sources, images => {
           background.images = images;
-          loop();
-        })
-        bgMusic = new Audio('../sounds/BGM2.wav');
+          if (gameStart == false) {
+            ctx.drawImage(sprite_sheet.startScreen, 0, 0, 798, 601, 0, 0, 800, 395);
+          }
+          if (gameStart == true) {
+            loop();
+          }
+        });
+
+        bgMusic = new Audio("../sounds/BGM2.wav");
         bgMusic.play();
       });
 
       sprite_sheet.image.src = "../images/character_move.png";
       sprite_sheet.enemyImage.src = "../images/character_move.png";
+      sprite_sheet.heart.src = "../images/health.png";
+      sprite_sheet.startScreen.src = "../images/Start-Screen.png";
     };
-  };
+  }
 
   var game = new Game();
   game.init();
-
 })();
