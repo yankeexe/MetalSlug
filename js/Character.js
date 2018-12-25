@@ -1,6 +1,3 @@
-const SPRITE_SIZE = 50;
-const SPRITE_DEST_SIZE = 90;
-
 function Character(frame_set, delay) {
 
   this.count = 0; // Counts the number of game cycles since the last frame change.
@@ -15,12 +12,12 @@ function Character(frame_set, delay) {
   this.y = 40 - 18;
   this.x_velocity = 0;
   this.y_velocity = 0;
-  var that = this;
   this.bullets = [];
   this.shootingTime = -10;
   this.isRightDirection = true;
   this.khatraWeapon = false;
-  this.khatraBulletCounter = 0;
+  this.khatraBulletCounter = 10;
+  var that = this;
 
   this.draw = function (ctx, sprite_sheet) {
     ctx.drawImage(images[IMAGE.ENEMY], that.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE,
@@ -67,6 +64,7 @@ function Character(frame_set, delay) {
       this.shootingTime = -10;
       this.shoot(sprite_sheet, canvas);
       controller.space.active = false;
+
       if (this.khatraWeapon) {
         var sound = new Audio('./sounds/Reload.wav');
         sound.volume = 1;
@@ -142,16 +140,15 @@ function Character(frame_set, delay) {
     this.bullets.push(bullet);
 
     if (this.khatraWeapon) {
-      this.khatraBulletCounter++;
+      this.khatraBulletCounter--;
     }
-    if (this.khatraBulletCounter > 30) {
-      this.khatraBulletCounter = 0;
+    if (this.khatraBulletCounter == 0) {
+      this.khatraBulletCounter = 10;
       this.khatraWeapon = false;
     }
   }
 
   this.showKhatraBulletCount = () => {
-    ctx.fillText(`Khatra: ${this.khatraBulletCounter}`, 500, 30);
-
+    ctx.fillText(`Khatra: ${this.khatraBulletCounter}`, 650, 30);
   }
 };

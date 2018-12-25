@@ -14,8 +14,8 @@ function Enemy(frame_set, delay) {
   this.speed = .5;
   this.bullets = [];
   this.shootTimer = 0;
+  this.eLife = 3;
   this.randomTime = Math.floor(Math.random() * 100 + 80);
-  this.life = 3;
   var that = this;
 
   this.draw = function (ctx, sprite_sheet) {
